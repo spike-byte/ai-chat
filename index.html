@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        background-color: aquamarine;
+        width: 100vw;
+      }
+
+      .wrapper {
+        width: 600px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <input id="ipt" type="text" />
+      <h2>
+        <pre id="answer"></pre>
+      </h2>
+    </div>
+    <script>
+      const input = document.getElementById("ipt")
+      const answer = document.getElementById("answer")
+
+      input.onkeydown = (e) => {
+        if (e.key === "Enter") {
+          answer.innerHTML = ""
+          send(e.target.value)
+        }
+      }
+
+      function send(promat) {
+        const url = new URL("/chat", location.href)
+        url.searchParams.set("promat", promat)
+
+        // 发起请求
+        const es = new EventSource(url)
+        // 服务端多次响应都会触发onmessage
+        es.onmessage = (e) => {
+          if (e.data === "[DONE]") {
+            return es.close()
+          }
+
+          const content = JSON.parse(e.data).choices[0].delta.content
+
+          if (content) {
+            answer.innerHTML += content
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

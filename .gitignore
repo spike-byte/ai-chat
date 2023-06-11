@@ -1,0 +1,34 @@
+# 忽略 node_modules 目录
+node_modules/
+
+# 忽略构建产生的文件和目录
+/dist
+/build
+/out
+
+# 忽略 Mac 系统自动生成的文件和目录
+.DS_Store
+._*
+
+# 忽略 Log 文件
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp.*
+
+# 忽略 IDE 缓存或者配置文件
+.vscode/
+.idea/
+*.iml
+
+# 依赖包的一些生成文件或者缓存目录
+/.erp/
+/bower_components/
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp.*
+
+
